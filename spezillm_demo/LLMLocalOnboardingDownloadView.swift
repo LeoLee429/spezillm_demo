@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SpeziLLMLocalDownload
-import SpeziOnboarding
 
 struct LLMLocalOnboardingDownloadView: View {
     @Binding var llmExists: Bool // Binding to control llmExists state

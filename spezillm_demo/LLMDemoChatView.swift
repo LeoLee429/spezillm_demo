@@ -10,13 +10,10 @@ import SpeziLLM
 import SpeziLLMLocal
 
 struct LLMDemoChatView: View {
-    @LLMSessionProvider(
-        schema: LLMLocalSchema(
-            modelPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
-        )
-    ) var llmSession: LLMLocalSession
+    @Environment(LLMRunner.self) var runner
     @Binding var llmExists: Bool
-    
+    @State private var llmSession: LLMLocalSession?
+
     var body: some View {
         VStack {
             Button(action: {
@@ -27,32 +24,47 @@ struct LLMDemoChatView: View {
             .padding()
             
             Button(action: {
-                llmSession.cancel()
+                llmSession?.cancel()
             }) {
                 Text("Interrupt Generation")
             }
             .padding()
             
-            LLMChatView(session: $llmSession)
+            if let session = llmSession {
+                LLMChatView(session: .constant(session))
+            } else {
+                Text("LLM Session not initialized")
+                    .foregroundColor(.red)
+            }
         }
+        .onAppear {
+            initializeLLMSession()
+        }
+    }
+    
+    private func initializeLLMSession() {
+            let modelURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
+            llmSession = runner(with:LLMLocalSchema(modelPath: modelURL))
     }
     
     private func removeModel() {
         do {
+            llmSession!.cancel()
             let llmFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
             try FileManager.default.removeItem(at: llmFilePath)
-            llmExists = false // Update llmExists state when model is removed
-            llmSession.cancel()
+            llmExists = false
+            llmSession = nil
         } catch {
             print("Error removing model: \(error.localizedDescription)")
-            // Handle error as needed
         }
     }
 }
 
-
-
-
-#Preview {
-    LLMDemoChatView(llmExists: .constant(true))
+#if DEBUG
+struct LLMDemoChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        LLMDemoChatView(llmExists: .constant(true))
+    }
 }
+#endif
+
