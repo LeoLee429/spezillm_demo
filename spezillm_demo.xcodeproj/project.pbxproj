@@ -21,6 +21,7 @@
 		968FFF792C3FA664001E1A66 /* SpeziLLMLocalDownload in Frameworks */ = {isa = PBXBuildFile; productRef = 968FFF782C3FA664001E1A66 /* SpeziLLMLocalDownload */; };
 		968FFF7B2C3FA664001E1A66 /* SpeziLLMOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 968FFF7A2C3FA664001E1A66 /* SpeziLLMOpenAI */; };
 		96DD9F482C4031D100730F00 /* LLMLocalOnboardingDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD9F472C4031D100730F00 /* LLMLocalOnboardingDownloadView.swift */; };
+		96DD9F4C2C40602D00730F00 /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD9F4B2C40602D00730F00 /* FileManagerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		968FFF622C3FA57C001E1A66 /* spezillm_demoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spezillm_demoUITests.swift; sourceTree = "<group>"; };
 		968FFF642C3FA57C001E1A66 /* spezillm_demoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spezillm_demoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		96DD9F472C4031D100730F00 /* LLMLocalOnboardingDownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMLocalOnboardingDownloadView.swift; sourceTree = "<group>"; };
+		96DD9F4B2C40602D00730F00 /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				967A9B452C3FB80A00632E9D /* DemoAppDelegate.swift */,
 				967A9B472C3FB86100632E9D /* LLMDemoChatView.swift */,
 				96DD9F472C4031D100730F00 /* LLMLocalOnboardingDownloadView.swift */,
+				96DD9F4B2C40602D00730F00 /* FileManagerExtension.swift */,
 			);
 			path = spezillm_demo;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96DD9F4C2C40602D00730F00 /* FileManagerExtension.swift in Sources */,
 				968FFF482C3FA578001E1A66 /* spezillm_demoApp.swift in Sources */,
 				967A9B482C3FB86100632E9D /* LLMDemoChatView.swift in Sources */,
 				96DD9F482C4031D100730F00 /* LLMLocalOnboardingDownloadView.swift in Sources */,

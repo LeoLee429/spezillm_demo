@@ -18,10 +18,11 @@ struct LLMLocalOnboardingDownloadView: View {
             llmDownloadUrl: LLMLocalDownloadManager.LLMUrlDefaults.llama2ChatModelUrl,
             llmStorageUrl: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
         ) {
-            llmExists = true
+            llmExists = true // Set llmExists to true when download completes
         }
     }
 }
+
 
 #Preview {
     LLMLocalOnboardingDownloadView(llmExists: .constant(false))

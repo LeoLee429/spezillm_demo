@@ -9,13 +9,13 @@ import SwiftUI
 import SpeziLLM
 import SpeziLLMLocal
 
-struct LLMLocalDemoView: View {
+struct LLMDemoChatView: View {
     @LLMSessionProvider(
         schema: LLMLocalSchema(
             modelPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
         )
-    ) var llm: LLMLocalSession
-    @Binding var llmExists: Bool // Binding to llmExists state to observe changes
+    ) var llmSession: LLMLocalSession
+    @Binding var llmExists: Bool
     
     var body: some View {
         VStack {
@@ -26,7 +26,14 @@ struct LLMLocalDemoView: View {
             }
             .padding()
             
-            LLMChatView(session: $llm)
+            Button(action: {
+                llmSession.cancel()
+            }) {
+                Text("Interrupt Generation")
+            }
+            .padding()
+            
+            LLMChatView(session: $llmSession)
         }
     }
     
@@ -35,6 +42,7 @@ struct LLMLocalDemoView: View {
             let llmFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
             try FileManager.default.removeItem(at: llmFilePath)
             llmExists = false // Update llmExists state when model is removed
+            llmSession.cancel()
         } catch {
             print("Error removing model: \(error.localizedDescription)")
             // Handle error as needed
@@ -42,14 +50,9 @@ struct LLMLocalDemoView: View {
     }
 }
 
-struct LLMLocalDemoView_Previews: PreviewProvider {
-    static var previews: some View {
-        LLMLocalDemoView(llmExists: .constant(true)) // Preview with llmExists set to true
-    }
-}
 
 
 
 #Preview {
-    LLMLocalDemoView(llmExists: .constant(true))
+    LLMDemoChatView(llmExists: .constant(true))
 }

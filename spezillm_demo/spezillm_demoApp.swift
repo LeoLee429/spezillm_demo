@@ -18,14 +18,12 @@ struct spezillm_demoApp: App {
             NavigationStack {
                 VStack {
                     if !llmExists {
-                        LLMLocalOnboardingDownloadView(llmExists: $llmExists)
+                        LLMLocalOnboardingDownloadView(llmExists: $llmExists).spezi(appDelegate)
+                    } else {
+                        LLMDemoChatView(llmExists: $llmExists).spezi(appDelegate)
                     }
                 }
                 .navigationTitle("SpeziLLM Demo")
-                .navigationDestination(isPresented: $llmExists) {
-                    LLMLocalDemoView(llmExists: $llmExists).spezi(appDelegate)
-                    Text("").hidden()
-                }
             }
             .onAppear {
                 checkLLMFile()
@@ -38,6 +36,7 @@ struct spezillm_demoApp: App {
         llmExists = FileManager.default.fileExists(atPath: llmFilePath.path)
     }
 }
+
 
 
 
