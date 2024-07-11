@@ -6,12 +6,40 @@
 //
 
 import SwiftUI
+import Spezi
 
 @main
 struct spezillm_demoApp: App {
+    @ApplicationDelegateAdaptor(DemoAppDelegate.self) var appDelegate
+    @State private var llmExists = false
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                VStack {
+                    if !llmExists {
+                        LLMLocalOnboardingDownloadView(llmExists: $llmExists)
+                    }
+                }
+                .navigationTitle("SpeziLLM Demo")
+                .navigationDestination(isPresented: $llmExists) {
+                    LLMLocalDemoView(llmExists: $llmExists).spezi(appDelegate)
+                    Text("").hidden()
+                }
+            }
+            .onAppear {
+                checkLLMFile()
+            }
         }
     }
+    
+    private func checkLLMFile() {
+        let llmFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
+        llmExists = FileManager.default.fileExists(atPath: llmFilePath.path)
+    }
 }
+
+
+
+
+
