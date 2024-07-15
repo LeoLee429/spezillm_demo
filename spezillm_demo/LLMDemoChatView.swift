@@ -44,7 +44,11 @@ struct LLMDemoChatView: View {
     
     private func initializeLLMSession() {
             let modelURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("llm.gguf")
-            llmSession = runner(with:LLMLocalSchema(modelPath: modelURL))
+        llmSession = runner(with:LLMLocalSchema(modelPath: modelURL, 
+                                                parameters: LLMLocalParameters(useMlock: true)
+//                                                ,
+//                                                formatChat: LLMLocalSchema.PromptFormattingDefaults.llama2
+                                               ))
     }
     
     private func removeModel() {
